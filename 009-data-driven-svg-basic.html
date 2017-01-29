@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>D3 Data Driven SVG</title>
+    <script type="text/javascript" src="./d3/d3.v3.js" charset="utf-8"></script>
+    <!-- it is important to use the utf-8 attribute on D3! Don't know why, though -->
+    <style>
+      .circleElem{
+        width: 30px;
+        height: 50px;
+        background: #446CB3;
+        margin-left: 5px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main"></div>
+
+    <script type="text/javascript">
+      //Width and height
+      var w = 500;
+      var h = 100;
+
+      var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)   // <-- Here
+            .attr("height", h); // <-- and here!
+
+      var dataset = [ 5, 10, 15, 20, 25 ];
+
+      var circles = svg.selectAll("circle")
+      .data(dataset)
+      .enter()
+      .append("circle");
+
+      circles.attr("cx", function(dataVal, iterationCounter) {
+            return (iterationCounter * 50) + 25;
+      })
+       .attr("cy", h/2)
+       .attr("r", function(dataVal) {
+         return dataVal;
+       })
+       .attr("fill", "yellow")
+       .attr("stroke", "orange")
+       .attr("stroke-width", function(d) {
+         return d/2;
+       });
+    </script>
+  </body>
+</html>
