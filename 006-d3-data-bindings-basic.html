@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>D3 Data Binding Basics</title>
+    <script type="text/javascript" src="./d3/d3.v3.js" charset="utf-8"></script>
+    <!-- it is important to use the utf-8 attribute on D3! Don't know why, though -->
+  </head>
+  <body>
+    <div id="main"></div>
+
+    <script type="text/javascript">
+      /*
+      D3 is smart about handling different kinds of data,
+      so it will accept practically any array of numbers,
+      strings, or objects (themselves containing other arrays or key/value pairs).
+
+      It can handle JSON (and GeoJSON) gracefully, and even has a built-in method
+      to help you load in CSV files.
+      */
+      var dataset = [ 123, 234, 345, 456, 567 ];
+
+      d3.select("#main").selectAll("p") // Select all p inside main div
+      .data(dataset) // Counts and parses our data values. Anything past this point will be executed 5 times
+      .enter() //  To create new, data-bound elements. This method looks at the DOM, and then at the data being handed to it.
+      .append("p") // Takes the placeholder selection created by enter() and inserts a p element into the DOM
+      .text("New paragraph!"); // Takes the reference to the newly created p and inserts a text value
+
+      // p elements has been added! Let's try to log them!
+      console.log(d3.selectAll("p")); // We can see an array
+      var paragraphArr = d3.selectAll("p")[0];
+      for(var i = 0; i < paragraphArr.length; i++) {
+        console.log(paragraphArr[i]); // will show the DOM element
+        console.log(paragraphArr[i].__data__); // will show the DOM __data__ from databaset
+      };
+    </script>
+  </body>
+</html>

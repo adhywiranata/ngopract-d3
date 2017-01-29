@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>D3 Data Binding Basics</title>
+    <script type="text/javascript" src="./d3/d3.v3.js" charset="utf-8"></script>
+    <!-- it is important to use the utf-8 attribute on D3! Don't know why, though -->
+  </head>
+  <body>
+    <div id="main"></div>
+
+    <script type="text/javascript">
+      var dataset = [ 123, 234, 345, 456, 567 ];
+
+      d3.select("#main").selectAll("p")
+      .data(dataset)
+      .enter()
+      .append("p")
+      .text(function(dataVal) {
+        return "New paragraph with data value: " + dataVal
+      });
+    </script>
+  </body>
+</html>
