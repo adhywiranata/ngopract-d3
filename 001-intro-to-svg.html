@@ -11,20 +11,48 @@
       stroke-width: 3pt; /* similar to border-width */
       stroke-dasharray: 3,5,10;
     }
+
+    .bordered {
+      border: 1px solid rgba(0,0,0, .2);
+      margin: 20px;
+    }
     </style>
   </head>
   <body>
-    <svg width="300" height="180">
-      <circle cx="30" cy="50" r="25" />
+    <svg width="1000" height="180" class="bordered">
+      <!-- CIRCLES -->
+      <!-- cx is x position, cy is y position -->
+      <circle cx="30" cy="50" r="25" fill="#123456"/>
       <circle cx="90" cy="50" r="25" class="red" />
       <circle cx="150" cy="50" r="25" class="fancy" />
 
+      <!-- RECTANGLES -->
+      <!-- x is x position, y is y position -->
       <rect x="10" y="80" width="40" height="40"
         fill="steelBlue" />
       <rect x="70" y="80" width="40" height="40"
         style="fill: steelBlue" />
       <rect x="130" y="80" width="40" height="40"
         class="fancy" />
+      <rect x="190" y="80" width="40" rx="10" height="40"
+        class="red" />
+      <rect x="250" y="80" width="40" rx="30" ry="10" height="40"
+        class="red" />
+      </svg>
+      <svg width="1000" height="180" class="bordered">
+      <!-- PATHS -->
+      <!-- M is the "move the point", and L is "draw the line" -->
+      <!-- M<x>, <y> -->
+      <path d="
+        M0, 90
+        L100, 90
+        L100, 45
+        L200, 45
+        L300, 0
+        L300, 180
+        L500, 0
+        L400, 150
+      " fill="none" style="stroke: blue"></path>
     </svg>
   </body>
 </html>
