@@ -3,13 +3,19 @@
     <title>D3 Data Driven SVG</title>
     <script type="text/javascript" src="./d3/d3.v3.js" charset="utf-8"></script>
     <!-- it is important to use the utf-8 attribute on D3! Don't know why, though -->
+    <style>
+      svg {
+        border: 1px solid rgba(0,0,0, .1);
+        margin: 0 auto;
+      }
+    </style>
   </head>
   <body>
     <div id="main"></div>
   <script>
 		//Width and height
-		var svgWidth = 500;
-		var svgHeight = 100;
+		var svgWidth = 1000;
+		var svgHeight = 200;
 		var barPadding = 1;
 
 		var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
