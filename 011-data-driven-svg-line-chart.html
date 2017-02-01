@@ -13,18 +13,47 @@
     <div id="main"></div>
   <script>
 		//Width and height
-		var svgWidth = 500;
-		var svgHeight = 100;
-		var barPadding = 1;
+		var svgWidth = 1000;
+		var svgHeight = 300;
 
-		var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-						11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-
+		var dataset = [ 1, 0, 7, 9, 2, 4, 6, 5, 1, 10 ];
+    var dataScale = 10; // 0 - 10 scale
 		//Create SVG element
 		var svg = d3.select("#main")
 					.append("svg")
 					.attr("width", svgWidth)
 					.attr("height", svgHeight);
+
+    var pathPoints = [];
+    for(var i = 0; i < dataset.length; i++) {
+      var currentPoint = '';
+      if(i === 0) {
+        currentPoint += "M";
+      }
+      else {
+        currentPoint += "L";
+      }
+      // X position of the point
+      currentPoint += i * svgWidth / dataset.length;
+      // Comma separator
+      currentPoint += ', ';
+      // Y position of the point
+      currentPoint += dataset[i] * svgHeight / 10;
+
+      pathPoints.push(currentPoint);
+    }
+
+    pathPoints = pathPoints.join(' ');
+    console.log("PATH POINTS D: " + pathPoints);
+
+    svg.selectAll("path")
+      .data([ true ])
+      .enter()
+      .append("path")
+      .attr("d", pathPoints)
+      .style("fill", "none")
+      .style("stroke", "#222")
+      .style("stroke-width", 2);
      </script>
   </body>
 </html>
