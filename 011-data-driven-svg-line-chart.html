@@ -16,7 +16,7 @@
 		var svgWidth = 1000;
 		var svgHeight = 300;
 
-		var dataset = [ 1, 0, 7, 9, 2, 4, 6, 5, 1, 10 ];
+		var dataset = [ 3, 0, 7, 9, 2, 2, 6, 5, 3, 10 ];
     var dataScale = 10; // 0 - 10 scale
 		//Create SVG element
 		var svg = d3.select("#main")
@@ -34,11 +34,14 @@
         currentPoint += "L";
       }
       // X position of the point
-      currentPoint += i * svgWidth / dataset.length;
+      currentPoint += i * svgWidth / (dataset.length - 1);
+      // why dataset.length - 1? because the 1st point wont have any width
+
       // Comma separator
       currentPoint += ', ';
+
       // Y position of the point
-      currentPoint += dataset[i] * svgHeight / 10;
+      currentPoint += svgHeight - (dataset[i] * svgHeight / 10);
 
       pathPoints.push(currentPoint);
     }
