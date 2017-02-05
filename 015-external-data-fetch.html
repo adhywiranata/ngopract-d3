@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>D3 Data Driven SVG Pie</title>
+    <script type="text/javascript" src="./d3/d3.min.js" charset="utf-8"></script>
+    <!-- it is important to use the utf-8 attribute on D3! Don't know why, though -->
+  </head>
+  <body>
+    <p>
+      We cannot use this html file normally in Chrome, since CORS will disable us from getting the csv file.
+      Instead, simply use a simple node server to serve this html file.
+    </p>
+    <h3>Installing</h3>
+    <code>npm install http-server -g</code>
+    <h3>Usage (enter the folder)</h3>
+    <code>http-server --cors</code>
+    <h2>Parsing Result</h2>
+    <p id="res">check your browser console!</p>
+    <script>
+      console.log("Data from Cities csv file");
+      d3.csv("./datas/cities.csv", function(data) {
+        console.log(data);
+      });
+      console.log("Data from Employees json file");
+      d3.json("./datas/employees.json", function(data) {
+        console.log(data);
+      });
+    </script>
+  </body>
+</html>
