@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>D3 Data Driven SVG Pie</title>
+    <script type="text/javascript" src="./d3/d3.min.js" charset="utf-8"></script>
+    <!-- it is important to use the utf-8 attribute on D3! Don't know why, though -->
+    <style>
+      svg {
+        border: 1px solid rgba(0,0,0, .1);
+      }
+      .legend {
+        font-size: 12px;
+      }
+      rect {
+        stroke-width: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main"></div>
+  <script>
+    // define our dataset for pie chart
+    var dataset = [
+      { label: 'Abulia', count: 10 },
+      { label: 'Betelgeuse', count: 20 },
+      { label: 'Cantaloupe', count: 30 },
+      { label: 'Dijkstra', count: 40 }
+    ];
+
+		//Width and height
+		var svgWidth = 360;
+		var svgHeight = 360;
+    // circle radius
+    var radius = Math.min(svgWidth, svgHeight) / 2;
+    var donutWidth = 75;
+
+    // defines color scale for us using d3
+    var color = d3.scaleOrdinal(d3.schemeCategory20b);
+    // https://github.com/d3/d3-scale/blob/master/README.md#category-scales
+    // Alternative
+    // var color = d3.scaleOrdinal()
+    //   .range(['#A60F2B', '#648C85', '#B3F2C9', '#528C18', '#C3F25C']);
+
+    var svg = d3.select('#main')
+      .append('svg')
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
+      .append('g')
+      .attr('transform', 'translate(' + (svgWidth / 2) +  ',' + (svgHeight / 2) + ')'); // center it inside the svg
+
+      /*
+      With the innerRadius value set to 0, you get a pie.
+      In this case we've set it to be 75px less than the outerRadius,
+      which results in a donut 75px wide.
+       */
+      var arc = d3.arc()
+        .innerRadius(radius - donutWidth)
+        .outerRadius(radius);
+
+      var pie = d3.pie()
+        .value(function(d) { return d.count; })
+        .sort(null);
+
+      var path = svg.selectAll('path')
+
+        .data(pie(dataset))
+        .enter() // creates placeholder nodes for each of the values in our dataset
+        .append('path') // use append() to replace our placeholders with path elements
+        .attr('d', arc)
+        .attr('fill', function(d, i) {
+          return color(d.data.label);
+        }); // define the fill for each path by associating a colour with each label in the dataset
+
+      var legendRectSize = 18;
+      var legendSpacing = 4;
+
+      var legend = svg.selectAll('.legend')
+      /*
+      We call data() with the domain of our color variable.
+      You may recall that in creating the path elements, we
+      defined the fill attribute using color(d.data.label).
+      So color.domain() actually refers to an array of labels from our dataset.
+      */
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function(d, i) {
+          var height = legendRectSize + legendSpacing;
+          var offset =  height * color.domain().length / 2;
+          var horz = -2 * legendRectSize;
+          var vert = i * height - offset;
+          return 'translate(' + horz + ',' + vert + ')';
+        });
+
+      /* Append rect to the legend "inner nodes"
+      (Remember, the legend now contains multiple items,
+      so rect will be appended to each of them) */
+      legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+
+      /* Append text to the legend "inner nodes" */
+      legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function(d) { return d; });
+   </script>
+  </body>
+</html>
